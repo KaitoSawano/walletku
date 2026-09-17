@@ -56,7 +56,7 @@ jobs:
         chmod +x gradlew
         ./gradlew clean
         printf "\nskip.android=false" >> local.properties
-        ./gradlew :feesafe-android:assembleRelease --stacktrace
+        ./gradlew assembleRelease --stacktrace
 
     # 4 - sign apk
 
