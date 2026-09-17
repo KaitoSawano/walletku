@@ -1,4 +1,4 @@
-# Build a Phoenix apk for Testnet, using the master branch.
+# Build a FeeSafe apk for Testnet, using the master branch.
 name: Build
 
 on:
@@ -6,7 +6,7 @@ on:
   push:
     branches: [ master, test-ci-build ]
     paths:
-      - 'phoenix-android/**'
+      - 'feesafe-android/**'
       - '.github/workflows/**'
 
 jobs:
@@ -16,10 +16,10 @@ jobs:
 
     # 1 - checkout project and dependencies
 
-    - name: Checkout Phoenix
+    - name: Checkout FeeSafe
       uses: actions/checkout@v2
       with:
-        path: phoenix
+        path: feesafe
 
     - name: Checkout lightning-kmp
       uses: actions/checkout@v2
@@ -47,16 +47,18 @@ jobs:
     - name: Build lightning-kmp and install to local maven repo
       run: |
         cd lightning-kmp
+        chmod +x gradlew
         ./gradlew clean build publishToMavenLocal -x check
 
     - name: Assemble the android apk
       run: |
-        cd phoenix
+        cd feesafe
+        chmod +x gradlew
         ./gradlew clean
         printf "\nskip.android=false" >> local.properties
-        ./gradlew :phoenix-android:assembleRelease --stacktrace
+        ./gradlew :feesafe-android:assembleRelease --stacktrace
 
-      # 4 - sign apk
+    # 4 - sign apk
 
     - name: Retrieve signing key
       run: 'echo "$TESTNET_KEY_HEX" | xxd -r -p > signingkey'
@@ -67,26 +69,18 @@ jobs:
     - name: Sign artifact
       run: |
         mkdir upload
-        mv phoenix/phoenix-android/build/outputs/apk/release/phoenix-*.apk upload/phoenix-testnet-latest.apk
-        /usr/local/lib/android/sdk/build-tools/34.0.0/apksigner sign --ks signingkey --ks-pass pass:$TESTNET_STORE_PASS --ks-key-alias $TESTNET_ALIAS --key-pass pass:$TESTNET_KEY_PASS upload/phoenix-testnet-latest.apk
+        mv feesafe/feesafe-android/build/outputs/apk/release/feesafe-*.apk upload/feesafe-testnet-latest.apk
+        /usr/local/lib/android/sdk/build-tools/34.0.0/apksigner sign --ks signingkey --ks-pass pass:$TESTNET_STORE_PASS --ks-key-alias $TESTNET_ALIAS --key-pass pass:$TESTNET_KEY_PASS upload/feesafe-testnet-latest.apk
       shell: bash
       env:
         TESTNET_STORE_PASS: ${{secrets.TESTNET_STORE_PASS}}
         TESTNET_ALIAS: ${{secrets.TESTNET_ALIAS}}
         TESTNET_KEY_PASS: ${{secrets.TESTNET_KEY_PASS}}
 
-      # 5 - upload apk
+    # 5 - upload apk
 
     - name: Upload apk as artifact for this action
       uses: actions/upload-artifact@v4
       with:
-        name: phoenix-testnet
-        path: upload/phoenix-testnet-latest.apk
-
-    - name: Upload to acinq.co
-      run: |
-        aws s3 cp ./upload/phoenix-testnet-latest.apk s3://acinq.co/pub/phoenix/
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: 'eu-west-1'
+        name: feesafe-testnet
+        path: upload/feesafe-testnet-latest.apk
