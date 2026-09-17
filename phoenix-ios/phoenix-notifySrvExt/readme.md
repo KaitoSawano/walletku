@@ -1,6 +1,6 @@
 # Architecture Notes: Notification Service Extension
 
-In a previous version of Phoenix we used "silent" push notifications to wake up the phoenix app, and allow it to receive payments when in the background. However, there were multiple problems with this.
+In a previous version of FeeSafe we used "silent" push notifications to wake up the feesafe app, and allow it to receive payments when in the background. However, there were multiple problems with this.
 
 
 
@@ -84,7 +84,7 @@ We have 2 mechanisms in place to prevent this:
 
 First, the ACINQ server only sends the push notification if there's not a connected node/client.
 
-Second, we use mach ports to send ping/pong messages between the container app & app extension. This allows the app extension to yield to the main phoenix app, and allows it to handle the payment.
+Second, we use mach ports to send ping/pong messages between the container app & app extension. This allows the app extension to yield to the main feesafe app, and allows it to handle the payment.
 
 
 

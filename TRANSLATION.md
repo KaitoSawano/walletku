@@ -1,12 +1,12 @@
 # Translations
 
-Phoenix is designed to easily support multiple localisations. The process is - for now - handled via GitHub pull requests.
+FeeSafe is designed to easily support multiple localisations. The process is - for now - handled via GitHub pull requests.
 
 ## What to translate
 
-There are currently two versions of Phoenix: the Android app and the iOS app. Both apps use different string resources and are localized separately. Their localization processes are completely different.
-- follow [these instructions](https://github.com/ACINQ/phoenix/blob/master/phoenix-android/TRANSLATION.md) to localize the Android app;
-- follow [these instructions](https://github.com/ACINQ/phoenix/blob/master/phoenix-ios/TRANSLATION.md) to localize the iOS app.
+There are currently two versions of FeeSafe: the Android app and the iOS app. Both apps use different string resources and are localized separately. Their localization processes are completely different.
+- follow [these instructions](https://github.com/ACINQ/feesafe/blob/master/feesafe-android/TRANSLATION.md) to localize the Android app;
+- follow [these instructions](https://github.com/ACINQ/feesafe/blob/master/feesafe-ios/TRANSLATION.md) to localize the iOS app.
 
 ## General considerations
 

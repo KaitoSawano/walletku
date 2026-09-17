@@ -15,4 +15,4 @@ Some content is dynamic: a part of it will contain a dynamic value, such as an a
 
 #### Additional guidelines
 
-See [here](https://github.com/ACINQ/phoenix/blob/master/TRANSLATION.md#general-considerations).
+See [here](https://github.com/ACINQ/feesafe/blob/master/TRANSLATION.md#general-considerations).

@@ -6,7 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "phoenix"
+rootProject.name = "feesafe"
 
 // Android app may be skipped to make life easier on iOS developers.
 // Use `skip.android` in `local.properties` to define whether android app are built or not.
@@ -20,9 +20,9 @@ val skipAndroid = File("$rootDir/local.properties").takeIf { it.exists() }
 System.setProperty("includeAndroid", (!skipAndroid).toString())
 
 // The shared app is always included.
-include(":phoenix-shared")
+include(":feesafe-shared")
 
 // Android apps are optional.
 if (!skipAndroid) {
-    include(":phoenix-android")
+    include(":feesafe-android")
 }

@@ -4,10 +4,10 @@ iOS has always been very strict about running processes in the background. The m
 
 
 
-What does this mean for Phoenix ?
+What does this mean for FeeSafe ?
 
-* Apple does NOT allow the main Phoenix app to run in response to a push notification
-* Apple does allow us to create a separate mini-process. This is like a mini version of Phoenix with no UI. And iOS will launch this process in response to a received push notification (under certain conditions)
+* Apple does NOT allow the main FeeSafe app to run in response to a push notification
+* Apple does allow us to create a separate mini-process. This is like a mini version of FeeSafe with no UI. And iOS will launch this process in response to a received push notification (under certain conditions)
 * The mini process has limited memory: it is capped at 24 MB. If the mini process exceeds this amount, iOS will kill it.
 * The mini process is given a maximum of 30 seconds to run. If it exceeds this amount, iOS will kill it.
 
@@ -38,7 +38,7 @@ This isn't exactly our use case. But it's currently the best option we have.
 
 So in general, here's how it works:
 
-- when a push notification arrives for Phoenix, iOS asks the question "is the mainApp open AND in the foreground"
+- when a push notification arrives for FeeSafe, iOS asks the question "is the mainApp open AND in the foreground"
 - if the answer is YES, then the push notification is handed to the mainApp for processing
 - if the answer is NO, then the notifySrvExt process is launched, and is handed the push notification for processing
 - the notifySrvExt is granted a maximum of 30 seconds to finish running, or it will be killed automatically by iOS
@@ -72,7 +72,7 @@ Luckily, iOS gives us tools we can use to properly deal with these situations. Y
 
 - user hits Send button to start a payment
 - we tell iOS that we've started a "long lived task"
-- user backgrounds Phoenix app
+- user backgrounds FeeSafe app
 - iOS knows we're in the middle of some important task, so it allows us to continue working (i.e. doesn't automatically close network connections, allows us to continue using CPU, etc)
 - when the payment finishes, we tell iOS that we've finished our "long lived task", and iOS moves us into full/standard background mode (i.e. kills open network connections)
 
